@@ -60,7 +60,7 @@ jobs:
           set -o pipefail
           cd android
           chmod +x ./gradlew
-          ./gradlew clean assembleDebug -x checkDebugAarMetadata -x checkReleaseAarMetadata -x lint -x test --no-daemon 2>&1 | tee ../gradle.log
+          ./gradlew assembleDebug --no-daemon 2>&1 | tee ../gradle.log
 
       - name: Show Gradle Failure Reason
         if: failure()
