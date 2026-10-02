@@ -42,6 +42,11 @@ jobs:
           mkdir -p android/app/src/main/assets/public
           cp -r dist/* android/app/src/main/assets/public/
 
+      - name: Setup Android SDK Platform & Licenses
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0" || true
+
       - name: Sync Capacitor Android (optional)
         continue-on-error: true
         run: npx --yes @capacitor/cli copy android || true
