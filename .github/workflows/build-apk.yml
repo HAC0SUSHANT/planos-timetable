@@ -57,9 +57,17 @@ jobs:
 
       - name: Build APK with Gradle
         run: |
+          set -o pipefail
           cd android
           chmod +x ./gradlew
-          ./gradlew clean assembleDebug -x checkDebugAarMetadata -x checkReleaseAarMetadata -x lint -x test --stacktrace --no-daemon
+          ./gradlew clean assembleDebug -x checkDebugAarMetadata -x checkReleaseAarMetadata -x lint -x test --no-daemon 2>&1 | tee ../gradle.log
+
+      - name: Show Gradle Failure Reason
+        if: failure()
+        run: |
+          echo "==================== WHAT WENT WRONG ===================="
+          grep -A 25 -B 2 "What went wrong" gradle.log || tail -n 60 gradle.log
+          echo "========================================================="
 
       - name: Locate Generated APK
         if: always()
