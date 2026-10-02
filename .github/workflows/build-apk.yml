@@ -55,7 +55,14 @@ jobs:
         run: |
           cd android
           chmod +x ./gradlew
-          ./gradlew assembleDebug --stacktrace
+          ./gradlew assembleDebug --stacktrace --info 2>&1 | tee ../gradle.log
+
+      - name: Print Gradle Log on Failure
+        if: failure()
+        run: |
+          echo "==================== GRADLE ERROR LOG ===================="
+          tail -n 120 gradle.log || true
+          echo "=========================================================="
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
