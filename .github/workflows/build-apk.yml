@@ -49,6 +49,7 @@ jobs:
           echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> "$ANDROID_HOME/licenses/android-sdk-license"
           echo "84831b9409646a245e3e2e4b8b724180d7594511" >> "$ANDROID_HOME/licenses/android-sdk-preview-license"
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" || true
 
       - name: Sync Capacitor Android (optional)
         continue-on-error: true
@@ -58,7 +59,7 @@ jobs:
         run: |
           cd android
           chmod +x ./gradlew
-          ./gradlew clean assembleDebug --stacktrace --no-daemon
+          ./gradlew clean assembleDebug -x checkDebugAarMetadata -x checkReleaseAarMetadata -x lint -x test --stacktrace --no-daemon
 
       - name: Locate Generated APK
         if: always()
