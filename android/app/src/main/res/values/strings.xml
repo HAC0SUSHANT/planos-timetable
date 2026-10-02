@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PlanOS</string>
+    <string name="title_activity_main">PlanOS</string>
+    <string name="package_name">com.planos.app</string>
+    <string name="custom_url_scheme">com.planos.app</string>
+</resources>
